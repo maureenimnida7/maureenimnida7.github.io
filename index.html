@@ -13,80 +13,8 @@
 <!-- ======= Content ======= -->
 <h1>Maureen Imnida</h1>
 
-<div class="square-slider-block w-full bg-blue-50 py-12 mt-24 mb-8">
-<div class="square-slider-wrapper overflow-hidden w-full relative">
-<div class="square-slider-track flex gap-32 items-center">
 
-<!-- Photo 1 -->
-<div class="square-slide-item flex flex-col items-center">
-<div class="square-img shadow">
-<!--Enable this i want to put label below each photo, do the same with other photo
-<p class="text-sm custom-label mt-2 text-center select-none pointer-events-none">Product Label</p> -->
-  <img alt="Australian Flag" class="w-full h-full object-cover" 
-  src="https://new.flagdisplays.com/sites/default/files/2025-08/homepageslider-01australian-flag.jpg" /></div>
-</div>
 
-<!-- Photo 2 -->
-<div class="square-slide-item flex flex-col items-center">
-<div class="square-img shadow">
-  <img alt="World Flags" class="w-full h-full object-cover" 
-  style="object-fit: cover;"
-  src="/sites/default/files/2025-08/homepageslider-02world-flags.jpg" /></div>
-</div>
-
-<!-- Photo 3 -->
-<div class="square-slide-item flex flex-col items-center">
-<div class="square-img shadow">
-  <img alt="Battle Flag of Australia" class="w-full h-full object-cover" 
-  style="object-fit: cover;"
-  src="/sites/default/files/2025-08/homepageslider-03-battle-flag-of-australia.jpeg" /></div>
-</div>
-
-<!-- Photo 4 -->
-<div class="square-slide-item flex flex-col items-center">
-<div class="square-img shadow">
-  <img alt="Premier Flags" class="w-full h-full object-cover" 
-  src="/sites/default/files/2025-08/homepageslider-04premier-feather-flag.jpg" /></div>
-</div>
-
-<!-- Photo 5 -->
-<div class="square-slide-item flex flex-col items-center">
-<div class="square-img shadow">
-  <img alt="Rect Flags" class="w-full h-full object-cover" 
-  src="/sites/default/files/2025-08/homepageslider-05rect-flags.jpg" /></div>
-</div>
-
-<!-- Photo 6 -->
-<div class="square-slide-item flex flex-col items-center">
-<div class="square-img shadow">
-  <img alt="Feather Flags" class="w-full h-full object-cover" 
-  src="/sites/default/files/2025-09/homepageslider-06feather-flags-800x600px.jpg"/></div>
-</div>
-
-<!-- Photo 7 -->
-<div class="square-slide-item flex flex-col items-center">
-<div class="square-img shadow">
-  <img alt="Feather Flags" class="w-full h-full object-cover" 
-  src="/sites/default/files/2025-08/homepageslider-07feather-flag.jpg" /></div>
-</div>
-</div>
-</div>
-</div>
-
-  
-
-<!-- Photo Grid -->
-<div class="grid" id="photoGrid"></div>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox">
-  <img id="lightboxImg" src="" alt="Photo">
-  <div class="controls">
-    <button id="prevBtn">Previous</button>
-    <button id="nextBtn">Next</button>
-    <button id="closeBtn">Back to Grid</button>
-  </div>
-</div>
 
 <!-- Videos -->
 <div class="video-row">
@@ -125,136 +53,7 @@
     font-size: 3em;
   }
 
-  .square-slider-track {
-    display: flex;
-    width: 100%;
-    animation: slide-left 30s linear infinite;
-  }
 
-  @keyframes slide-left {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  .square-img {
-  width: 400px;
-  height: 300px; 
-  /* use a 800×600px image pixel to not distort */ 
-  overflow: hidden;
-  background-color: #eef4fb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px #004080; 
-  /* border-radius: 9999px; ← add this if want to change to circle */
-  transition: transform 0.3s ease;
-}
-
-  .square-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-
-  .square-img:hover {
-    transform: scale(1.05);
-}
-
-  .square-slider-wrapper {
-  overflow: hidden;
-  padding-top: 1rem; 
-  padding-bottom: 1rem; 
-
-
-  /* webkitmask settings if want to not have transparent effect on left and right */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 0%, black 90%);
-          mask-image: linear-gradient(to right, transparent 0%, black 0%, black 90%);
-}
-
-/* webkitmask settings is if want to put transparent effect on left and right
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-
-*/
-
-
-  .square-slide-item {
-    flex: 0 0 auto;
-    margin-right: 1rem;
-  }
-  
-
-  /* Photo Grid */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px;
-    padding: 10px;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  .grid img {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-
-  .grid img:hover {
-    transform: scale(1.05);
-  }
-
-  /* Lightbox */
-  .lightbox {
-    display: none;
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: rgba(0,0,0,0.95);
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 1000;
-    padding:10px;
-    box-sizing: border-box;
-  }
-
-  .lightbox.active { display:flex; }
-
-  .lightbox img {
-    max-width:90%;
-    max-height:70%;
-    border-radius:12px;
-    margin-bottom:15px;
-  }
-
-  .controls {
-    display:flex;
-    justify-content:center;
-    flex-wrap: wrap;
-    gap:10px;
-  }
-
-  .controls button {
-    padding:10px 15px;
-    font-size:16px;
-    cursor:pointer;
-    border:none;
-    border-radius:5px;
-    background:#fff;
-    color:#e63946;
-    transition:0.2s;
-  }
-
-  .controls button:hover { background:#f1dede; }
 
   /* Video Flex - always side by side */
   .video-row {
@@ -316,69 +115,11 @@
     }
   }
 
-  // Photo Grid
-  const photos=[
-    ["images/actions_brushed.jpg"],  
-    ["images/childhood.jpg","photo2b.jpg","photo2c.jpg"], 
-    ["photo3.jpg"],
-    ["photo4a.jpg","photo4b.jpg"]
-  ];
-
-  const grid=document.getElementById('photoGrid');
-  photos.slice().reverse().forEach((photoSet,idx)=>{
-    const img=document.createElement('img');
-    img.src=photoSet[0];
-    img.alt=`Photo ${idx+1}`;
-    img.dataset.index=idx;
-    grid.appendChild(img);
-  });
-
-  const lightbox=document.getElementById('lightbox');
-  const lightboxImg=document.getElementById('lightboxImg');
-  const prevBtn=document.getElementById('prevBtn');
-  const nextBtn=document.getElementById('nextBtn');
-  const closeBtn=document.getElementById('closeBtn');
-  let currentPost=0,currentPhoto=0;
-
-  grid.addEventListener('click',e=>{
-    if(e.target.tagName==='IMG'){
-      currentPost=parseInt(e.target.dataset.index);
-      currentPhoto=0;
-      showLightbox();
-    }
-  });
-
-  function showLightbox(){
-    lightbox.classList.add('active');
-    updateLightboxImage();
-    updateControls();
-  }
-
-  function updateLightboxImage(){
-    lightboxImg.src=photos[currentPost][currentPhoto];
-  }
-
-  function updateControls(){
-    prevBtn.style.display=photos[currentPost].length>1?'inline-block':'none';
-    nextBtn.style.display=photos[currentPost].length>1?'inline-block':'none';
-  }
-
-  prevBtn.addEventListener('click',()=>{
-    currentPhoto=(currentPhoto-1+photos[currentPost].length)%photos[currentPost].length;
-    updateLightboxImage();
-  });
-
-  nextBtn.addEventListener('click',()=>{
-    currentPhoto=(currentPhoto+1)%photos[currentPost].length;
-    updateLightboxImage();
-  });
-
-  closeBtn.addEventListener('click',()=>{
-    lightbox.classList.remove('active');
-  });
+  
 </script>
 
 </body>
 </html>
+
 
 
