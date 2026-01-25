@@ -8,55 +8,33 @@
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
 
-
-</head>
-<body>
-
-<h1>Hi Dadi, welcome to my site 💖</h1>
-<h2>This is temporary for now, but I’ll update it with more photos soon. I love you.</h2>
-
-<!-- Photo Grid -->
-<div class="grid" id="photoGrid">
-  <!-- Photos with multiple images represented as arrays -->
-</div>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox">
-  <img id="lightboxImg" src="" alt="Photo">
-  <div class="controls">
-    <button id="prevBtn">Previous</button>
-    <button id="nextBtn">Next</button>
-    <button id="closeBtn">Back to Grid</button>
-  </div>
-</div>
-
-
 <style>
+  /* Base Styles */
   body {
     font-family: 'Montserrat', sans-serif;
     margin: 0;
-    background: #fef6f6; /* soft romantic background */
+    background: #fef6f6;
     color: #333;
   }
 
-  h1, h2 {
+  h1 {
     font-family: 'Great Vibes', cursive;
-    text-align: center;
-    color: #e63946; /* soft red */
-    margin: 10px 0;
+    text-align: left;
+    color: #e63946;
+    margin: 15px 20px;
   }
 
   /* Grid container */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
     padding: 10px;
   }
 
   .grid img {
     width: 100%;
-    height: 150px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     cursor: pointer;
     border-radius: 12px;
@@ -73,11 +51,13 @@
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.95);
     justify-content: center;
     align-items: center;
     flex-direction: column;
     z-index: 1000;
+    padding: 10px;
+    box-sizing: border-box;
   }
 
   .lightbox.active {
@@ -85,7 +65,7 @@
   }
 
   .lightbox img {
-    max-width: 90%;
+    max-width: 100%;
     max-height: 70%;
     border-radius: 12px;
     margin-bottom: 15px;
@@ -94,11 +74,12 @@
   .controls {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .controls button {
-    padding: 10px 20px;
+    padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
     border: none;
@@ -112,10 +93,48 @@
   .controls button:hover {
     background: #f1dede;
   }
+
+  /* Responsive heading on mobile */
+  @media (max-width: 600px) {
+    h1 {
+      text-align: center;
+      font-size: 2em;
+    }
+
+    .controls button {
+      flex: 1 1 100%;
+      font-size: 14px;
+      padding: 8px;
+    }
+
+    .grid {
+      gap: 5px;
+      padding: 5px;
+    }
+  }
 </style>
+</head>
+<body>
+
+<h1>Maureen Imnida</h1>
+
+<!-- Photo Grid -->
+<div class="grid" id="photoGrid">
+  <!-- Photos will be loaded here -->
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <img id="lightboxImg" src="" alt="Photo">
+  <div class="controls">
+    <button id="prevBtn">Previous</button>
+    <button id="nextBtn">Next</button>
+    <button id="closeBtn">Back to Grid</button>
+  </div>
+</div>
 
 <script>
-// Example data: each item can be single or multiple photos
+// Example photo data
 const photos = [
   ["photo1.jpg"],  
   ["photo2a.jpg", "photo2b.jpg", "photo2c.jpg"], 
@@ -123,7 +142,7 @@ const photos = [
   ["photo4a.jpg", "photo4b.jpg"]
 ];
 
-// Display grid with newest photos on top
+// Display grid with newest on top
 const grid = document.getElementById('photoGrid');
 photos.reverse().forEach((photoSet, postIndex) => {
   const img = document.createElement('img');
