@@ -11,7 +11,6 @@
 <body>
 
 <!-- ======= Content ======= -->
-
 <h1>Maureen Imnida</h1>
 
 <!-- Photo Grid -->
@@ -30,13 +29,20 @@
 <!-- Videos -->
 <div class="video-row">
   <div class="video-container">
-    <iframe id="video1" src="https://www.youtube.com/embed/e6uFCfzZhKY&list=RDe6uFCfzZhKY&start_radio=1" allowfullscreen></iframe>
+    <iframe id="video1"
+      src="https://www.youtube.com/embed/e6uFCfzZhKY?list=RDe6uFCfzZhKY&start_radio=1"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
   </div>
   <div class="video-container">
-    <iframe id="video2"  src="https://www.youtube.com/embed/fu9yk7gCTbc" allowfullscreen></iframe>
+    <iframe id="video2"
+      src="https://www.youtube.com/embed/fu9yk7gCTbc"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
   </div>
 </div>
-
 
 <!-- ======= Styles ======= -->
 <style>
@@ -135,9 +141,9 @@
 
   .video-container {
     position: relative;
-    flex: 1 1 0;      /* flexible width */
-    max-width: 45%;    /* two videos side by side */
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    flex: 1 1 0;
+    max-width: 49%; /* two videos side by side */
+    padding-bottom: 56.25%; /* 16:9 ratio */
     height: 0;
   }
 
@@ -158,13 +164,13 @@
     h1{ font-size:2em; margin:15px 0; }
     .controls button{ flex:1 1 100%; font-size:14px; padding:8px; }
     .grid{ grid-template-columns:repeat(auto-fill,minmax(80px,1fr)); gap:8px; }
-    .video-container{ max-width:48%; } /* shrink slightly on phones */
+    .video-container{ max-width:49%; } /* still side by side */
   }
 
   @media(max-width:400px){
     h1{ font-size:1.8em; }
     .controls button{ font-size:12px; padding:6px; }
-    .video-container{ max-width:48%; } /* still side by side */
+    .video-container{ max-width:49%; } /* still side by side */
   }
 </style>
 
@@ -248,7 +254,3 @@
 
 </body>
 </html>
-
-
-
-
