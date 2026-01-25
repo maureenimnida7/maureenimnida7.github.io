@@ -1,63 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>maureenimnida7</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Love Photo Gallery</title>
 
-  <style>
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
 
-    img {
-      display: block;
-      margin: 20px auto;
-      max-width: 100%;
-      height: 80%;
-    }
+<style>
+  body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    background: #fef6f6; /* soft romantic background */
+    color: #333;
+  }
 
-    /* Responsive YouTube video */
-    .video-container {
-      position: relative;
-      width: 100%;
-      max-width: 560px; /* max width on desktop */
-      margin: 20px auto;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio */
-      height: 0;
-    }
+  h1, h2 {
+    font-family: 'Great Vibes', cursive;
+    text-align: center;
+    color: #e63946; /* soft red */
+    margin: 10px 0;
+  }
 
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-  </style>
+  /* Grid container */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .grid img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: transform 0.2s;
+  }
+
+  .grid img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Lightbox overlay */
+  .lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+  }
+
+  .lightbox.active {
+    display: flex;
+  }
+
+  .lightbox img {
+    max-width: 90%;
+    max-height: 70%;
+    border-radius: 12px;
+    margin-bottom: 15px;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .controls button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background: #fff;
+    color: #e63946;
+    font-family: 'Montserrat', sans-serif;
+    transition: background 0.2s;
+  }
+
+  .controls button:hover {
+    background: #f1dede;
+  }
+</style>
 </head>
 <body>
 
-  <h1>Hi dadi welcome to my site intended for you❤️</h1>
-  <h2>This is temporary pa lang, but will gonna update this with photos soon. I love you.</h2>
+<h1>Hi Dadi, welcome to my site 💖</h1>
+<h2>This is temporary for now, but I’ll update it with more photos soon. I love you.</h2>
 
-  <img src="daditatoo.jpg" alt="My photo">
+<!-- Photo Grid -->
+<div class="grid" id="photoGrid">
+  <!-- Photos with multiple images represented as arrays -->
+</div>
 
-  <!-- Responsive YouTube embed -->
-  <div class="video-container">
-    <iframe 
-      src="https://www.youtube.com/embed/e6uFCfzZhKY?autoplay=0&controls=1"
-      title="YouTube video player" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-      allowfullscreen>
-    </iframe>
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <img id="lightboxImg" src="" alt="Photo">
+  <div class="controls">
+    <button id="prevBtn">Previous</button>
+    <button id="nextBtn">Next</button>
+    <button id="closeBtn">Back to Grid</button>
   </div>
+</div>
+
+<script>
+// Example data: each item can be single or multiple photos
+const photos = [
+  ["photo1.jpg"],  
+  ["photo2a.jpg", "photo2b.jpg", "photo2c.jpg"], 
+  ["photo3.jpg"],
+  ["photo4a.jpg", "photo4b.jpg"]
+];
+
+// Display grid with newest photos on top
+const grid = document.getElementById('photoGrid');
+photos.reverse().forEach((photoSet, postIndex) => {
+  const img = document.createElement('img');
+  img.src = photoSet[0];
+  img.alt = "Photo " + (postIndex+1);
+  img.dataset.index = postIndex;
+  grid.appendChild(img);
+});
+
+// Lightbox functionality
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const closeBtn = document.getElementById('closeBtn');
+
+let currentPost = 0;
+let currentPhoto = 0;
+
+grid.addEventListener('click', (e) => {
+  if(e.target.tagName === 'IMG') {
+    currentPost = parseInt(e.target.dataset.index);
+    currentPhoto = 0;
+    showLightbox();
+  }
+});
+
+function showLightbox() {
+  lightbox.classList.add('active');
+  updateLightboxImage();
+  updateControls();
+}
+
+function updateLightboxImage() {
+  lightboxImg.src = photos[currentPost][currentPhoto];
+}
+
+function updateControls() {
+  prevBtn.style.display = photos[currentPost].length > 1 ? 'inline-block' : 'none';
+  nextBtn.style.display = photos[currentPost].length > 1 ? 'inline-block' : 'none';
+}
+
+prevBtn.addEventListener('click', () => {
+  currentPhoto = (currentPhoto - 1 + photos[currentPost].length) % photos[currentPost].length;
+  updateLightboxImage();
+});
+
+nextBtn.addEventListener('click', () => {
+  currentPhoto = (currentPhoto + 1) % photos[currentPost].length;
+  updateLightboxImage();
+});
+
+closeBtn.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+});
+</script>
 
 </body>
 </html>
-
-
