@@ -10,215 +10,240 @@
 </head>
 <body>
 
-  <!-- Header -->
-  <h1>Maureen Imnida </h1>
+<!-- ======= Content ======= -->
 
-  <!-- Photo Grid -->
-  <div class="grid" id="photoGrid">
-    <!-- Photos will load here -->
+<h1>Maureen Imnida</h1>
+
+<!-- Photo Grid -->
+<div class="grid" id="photoGrid"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <img id="lightboxImg" src="" alt="Photo">
+  <div class="controls">
+    <button id="prevBtn">Previous</button>
+    <button id="nextBtn">Next</button>
+    <button id="closeBtn">Back to Grid</button>
   </div>
+</div>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <img id="lightboxImg" src="" alt="Photo">
-    <div class="controls">
-      <button id="prevBtn">Previous</button>
-      <button id="nextBtn">Next</button>
-      <button id="closeBtn">Back to Grid</button>
-    </div>
-  </div>
-
-  <!-- Responsive YouTube Video -->
+<!-- Videos -->
+<div class="video-row">
   <div class="video-container">
-    <iframe 
-      src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID?autoplay=0&controls=1"
-      title="YouTube video player" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-      allowfullscreen>
-    </iframe>
+    <iframe id="video1" src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID_1?enablejsapi=1" allowfullscreen></iframe>
   </div>
+  <div class="video-container">
+    <iframe id="video2" src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID_2?enablejsapi=1" allowfullscreen></iframe>
+  </div>
+</div>
 
-  <!-- Styles -->
-  <style>
-    /* Base Styles */
-    body {
-      font-family: 'Montserrat', sans-serif;
-      margin: 0;
-      background: #fef6f6;
-      color: #333;
-      text-align: center;
+<!-- ======= Styles ======= -->
+<style>
+  /* Base Styles */
+  body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    background: #fef6f6;
+    color: #333;
+    text-align: center;
+    padding: 0 10px;
+  }
+
+  h1 {
+    font-family: 'Great Vibes', cursive;
+    color: #e63946;
+    margin: 20px 0;
+    font-size: 3em;
+  }
+
+  /* Photo Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    padding: 10px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .grid img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .grid img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.95);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+    padding:10px;
+    box-sizing: border-box;
+  }
+
+  .lightbox.active { display:flex; }
+
+  .lightbox img {
+    max-width:90%;
+    max-height:70%;
+    border-radius:12px;
+    margin-bottom:15px;
+  }
+
+  .controls {
+    display:flex;
+    justify-content:center;
+    flex-wrap: wrap;
+    gap:10px;
+  }
+
+  .controls button {
+    padding:10px 15px;
+    font-size:16px;
+    cursor:pointer;
+    border:none;
+    border-radius:5px;
+    background:#fff;
+    color:#e63946;
+    transition:0.2s;
+  }
+
+  .controls button:hover { background:#f1dede; }
+
+  /* Video Flex - always side by side */
+  .video-row {
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:20px 0;
+    flex-wrap: nowrap; /* never stack */
+  }
+
+  .video-container {
+    position: relative;
+    flex: 1 1 0;      /* flexible width */
+    max-width: 45%;    /* two videos side by side */
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    border:0;
+  }
+
+  /* Responsive Styles */
+  @media(max-width:800px){
+    h1{ font-size:2.5em; }
+    .grid{ grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); }
+  }
+
+  @media(max-width:600px){
+    h1{ font-size:2em; margin:15px 0; }
+    .controls button{ flex:1 1 100%; font-size:14px; padding:8px; }
+    .grid{ grid-template-columns:repeat(auto-fill,minmax(80px,1fr)); gap:8px; }
+    .video-container{ max-width:48%; } /* shrink slightly on phones */
+  }
+
+  @media(max-width:400px){
+    h1{ font-size:1.8em; }
+    .controls button{ font-size:12px; padding:6px; }
+    .video-container{ max-width:48%; } /* still side by side */
+  }
+</style>
+
+<!-- ======= Scripts ======= -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  // YouTube API
+  let player1, player2;
+  function onYouTubeIframeAPIReady(){
+    player1=new YT.Player('video1',{events:{'onStateChange':onPlayerStateChange}});
+    player2=new YT.Player('video2',{events:{'onStateChange':onPlayerStateChange}});
+  }
+  function onPlayerStateChange(event){
+    if(event.data===YT.PlayerState.PLAYING){
+      if(event.target===player1) player2.pauseVideo();
+      if(event.target===player2) player1.pauseVideo();
     }
+  }
 
-    h1 {
-      font-family: 'Great Vibes', cursive;
-      color: #e63946;
-      margin: 15px 20px;
-      font-size: 3em;
+  // Photo Grid
+  const photos=[
+    ["photo1.jpg"],  
+    ["photo2a.jpg","photo2b.jpg","photo2c.jpg"], 
+    ["photo3.jpg"],
+    ["photo4a.jpg","photo4b.jpg"]
+  ];
+
+  const grid=document.getElementById('photoGrid');
+  photos.slice().reverse().forEach((photoSet,idx)=>{
+    const img=document.createElement('img');
+    img.src=photoSet[0];
+    img.alt=`Photo ${idx+1}`;
+    img.dataset.index=idx;
+    grid.appendChild(img);
+  });
+
+  const lightbox=document.getElementById('lightbox');
+  const lightboxImg=document.getElementById('lightboxImg');
+  const prevBtn=document.getElementById('prevBtn');
+  const nextBtn=document.getElementById('nextBtn');
+  const closeBtn=document.getElementById('closeBtn');
+  let currentPost=0,currentPhoto=0;
+
+  grid.addEventListener('click',e=>{
+    if(e.target.tagName==='IMG'){
+      currentPost=parseInt(e.target.dataset.index);
+      currentPhoto=0;
+      showLightbox();
     }
+  });
 
-    /* Grid container */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 10px;
-      padding: 10px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
+  function showLightbox(){
+    lightbox.classList.add('active');
+    updateLightboxImage();
+    updateControls();
+  }
 
-    .grid img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      cursor: pointer;
-      border-radius: 12px;
-      transition: transform 0.2s;
-    }
+  function updateLightboxImage(){
+    lightboxImg.src=photos[currentPost][currentPhoto];
+  }
 
-    .grid img:hover {
-      transform: scale(1.05);
-    }
+  function updateControls(){
+    prevBtn.style.display=photos[currentPost].length>1?'inline-block':'none';
+    nextBtn.style.display=photos[currentPost].length>1?'inline-block':'none';
+  }
 
-    /* Lightbox */
-    .lightbox {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.95);
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 1000;
-      padding: 10px;
-      box-sizing: border-box;
-    }
+  prevBtn.addEventListener('click',()=>{
+    currentPhoto=(currentPhoto-1+photos[currentPost].length)%photos[currentPost].length;
+    updateLightboxImage();
+  });
 
-    .lightbox.active {
-      display: flex;
-    }
+  nextBtn.addEventListener('click',()=>{
+    currentPhoto=(currentPhoto+1)%photos[currentPost].length;
+    updateLightboxImage();
+  });
 
-    .lightbox img {
-      max-width: 90%;
-      max-height: 70%;
-      border-radius: 12px;
-      margin-bottom: 15px;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .controls button {
-      padding: 10px 15px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background: #fff;
-      color: #e63946;
-      font-family: 'Montserrat', sans-serif;
-      transition: background 0.2s;
-    }
-
-    .controls button:hover {
-      background: #f1dede;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      h1 { font-size: 2em; }
-      .controls button { flex: 1 1 100%; font-size: 14px; padding: 8px; }
-      .grid { gap: 5px; padding: 5px; }
-    }
-
-    /* Responsive YouTube */
-    .video-container {
-      position: relative;
-      width: 100%;
-      max-width: 560px;
-      margin: 20px auto;
-      padding-bottom: 56.25%;
-      height: 0;
-    }
-
-    .video-container iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: 0;
-    }
-  </style>
-
-  <!-- Scripts -->
-  <script>
-    // Add your photos here. Each array inside represents a post with 1 or more photos
-    const photos = [
-      ["photo1.jpg"],  
-      ["photo2a.jpg", "photo2b.jpg", "photo2c.jpg"], 
-      ["photo3.jpg"],
-      ["photo4a.jpg", "photo4b.jpg"]
-    ];
-
-    // Display grid
-    const grid = document.getElementById('photoGrid');
-    photos.slice().reverse().forEach((photoSet, postIndex) => {
-      const img = document.createElement('img');
-      img.src = photoSet[0]; // thumbnail
-      img.alt = `Photo ${postIndex + 1}`;
-      img.dataset.index = postIndex;
-      grid.appendChild(img);
-    });
-
-    // Lightbox
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const closeBtn = document.getElementById('closeBtn');
-
-    let currentPost = 0;
-    let currentPhoto = 0;
-
-    grid.addEventListener('click', e => {
-      if(e.target.tagName === 'IMG') {
-        currentPost = parseInt(e.target.dataset.index);
-        currentPhoto = 0;
-        showLightbox();
-      }
-    });
-
-    function showLightbox() {
-      lightbox.classList.add('active');
-      updateLightboxImage();
-      updateControls();
-    }
-
-    function updateLightboxImage() {
-      lightboxImg.src = photos[currentPost][currentPhoto];
-    }
-
-    function updateControls() {
-      prevBtn.style.display = photos[currentPost].length > 1 ? 'inline-block' : 'none';
-      nextBtn.style.display = photos[currentPost].length > 1 ? 'inline-block' : 'none';
-    }
-
-    prevBtn.addEventListener('click', () => {
-      currentPhoto = (currentPhoto - 1 + photos[currentPost].length) % photos[currentPost].length;
-      updateLightboxImage();
-    });
-
-    nextBtn.addEventListener('click', () => {
-      currentPhoto = (currentPhoto + 1) % photos[currentPost].length;
-      updateLightboxImage();
-    });
-
-    closeBtn.addEventListener('click', () => {
-      lightbox.classList.remove('active');
-    });
-  </script>
+  closeBtn.addEventListener('click',()=>{
+    lightbox.classList.remove('active');
+  });
+</script>
 
 </body>
 </html>
