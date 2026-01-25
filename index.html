@@ -13,6 +13,30 @@
 <!-- ======= Content ======= -->
 <h1>Maureen Imnida</h1>
 
+<div class="slider">
+  <!-- Hidden radio buttons -->
+  <input type="radio" name="slider" id="slide1" checked>
+  <input type="radio" name="slider" id="slide2">
+  <input type="radio" name="slider" id="slide3">
+  <input type="radio" name="slider" id="slide4">
+
+  <!-- Slides -->
+  <div class="slides">
+    <img src="images/photo1.jpg" alt="Photo 1">
+    <img src="images/photo2.jpg" alt="Photo 2">
+    <img src="images/photo3.jpg" alt="Photo 3">
+    <img src="images/photo4.jpg" alt="Photo 4">
+  </div>
+</div>
+
+<!-- Navigation buttons -->
+<div style="margin-top:10px;">
+  <label for="slide1" class="nav-btn">1</label>
+  <label for="slide2" class="nav-btn">2</label>
+  <label for="slide3" class="nav-btn">3</label>
+  <label for="slide4" class="nav-btn">4</label>
+</div>
+
 
 
 
@@ -51,6 +75,91 @@
     color: #e63946;
     margin: 20px 0;
     font-size: 3em;
+  }
+
+  >
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #fef6f6;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    color: #e63946;
+  }
+
+  /* Slider container */
+  .slider {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  /* Slides wrapper */
+  .slides {
+    display: flex;
+    width: 400%; /* 4 images */
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .slides img {
+    width: 100%;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  /* Radio buttons for control */
+  input[name="slider"] {
+    display: none;
+  }
+
+  /* Navigation buttons */
+  .nav-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+  }
+
+  .nav-btn:hover {
+    background: #d62828;
+  }
+
+  /* Slide control using :checked */
+  #slide1:checked ~ .slides { transform: translateX(0%); }
+  #slide2:checked ~ .slides { transform: translateX(-100%); }
+  #slide3:checked ~ .slides { transform: translateX(-200%); }
+  #slide4:checked ~ .slides { transform: translateX(-300%); }
+
+  /* Responsive adjustments */
+  @media(max-width: 800px) {
+    .nav-btn {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  }
+
+  @media(max-width: 500px) {
+    .nav-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    .slides img {
+      border-radius: 8px;
+    }
   }
 
 
@@ -120,6 +229,7 @@
 
 </body>
 </html>
+
 
 
 
